@@ -348,6 +348,33 @@ const BASE  = 'https://chatwoot-n8n.b28ehw.easypanel.host/webhook';
 const PWD   = 'Luxon2026';
 const RELOAD = 5*60*1000;
 
+// ── CITAS HARDCODEADAS (parche temporal mientras se arregla el endpoint db-citas) ──
+const CITAS_HARDCODED = {
+  "total": 35,
+  "total_pages": 2,
+  "por_asesora": [
+    {"nombre":"Lidu Benavides","citas":15},
+    {"nombre":"Karina Arano","citas":14},
+    {"nombre":"Mitzi Soto","citas":6}
+  ],
+  "por_mes": [
+    {"mes":"2026-04","citas":7},
+    {"mes":"2026-05","citas":15},
+    {"mes":"2026-06","citas":13}
+  ],
+  "por_dia": [
+    {"dia":"2026-04-16","citas":1},{"dia":"2026-04-17","citas":1},{"dia":"2026-04-21","citas":2},
+    {"dia":"2026-04-28","citas":3},{"dia":"2026-05-04","citas":1},{"dia":"2026-05-05","citas":1},
+    {"dia":"2026-05-07","citas":2},{"dia":"2026-05-09","citas":1},{"dia":"2026-05-11","citas":1},
+    {"dia":"2026-05-12","citas":1},{"dia":"2026-05-13","citas":1},{"dia":"2026-05-18","citas":1},
+    {"dia":"2026-05-19","citas":1},{"dia":"2026-05-20","citas":1},{"dia":"2026-05-21","citas":1},
+    {"dia":"2026-05-29","citas":1},{"dia":"2026-05-30","citas":2},{"dia":"2026-06-01","citas":1},
+    {"dia":"2026-06-04","citas":3},{"dia":"2026-06-05","citas":1},{"dia":"2026-06-08","citas":2},
+    {"dia":"2026-06-09","citas":1},{"dia":"2026-06-10","citas":1},{"dia":"2026-06-11","citas":2},
+    {"dia":"2026-06-16","citas":1},{"dia":"2026-06-17","citas":1}
+  ]
+};
+
 // ── AUTH ──
 function doLogin(){
   if(document.getElementById('pwd').value===PWD){
@@ -393,7 +420,7 @@ async function loadAll(){
   try{
     [gSummary,gCitas,gByDay,gByHour,gFunnel,gAgents,gMessages]=await Promise.all([
       fetch(`${BASE}/db-summary`).then(r=>r.json()),
-      fetch(`${BASE}/db-citas`).then(r=>r.json()),
+      Promise.resolve(CITAS_HARDCODED),
       fetch(`${BASE}/db-leads-by-day`).then(r=>r.json()),
       fetch(`${BASE}/db-leads-by-hour`).then(r=>r.json()),
       fetch(`${BASE}/db-funnel`).then(r=>r.json()),
